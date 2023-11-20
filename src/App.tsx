@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Box, Typography } from '@mui/material';
+import NavigationBar from './components/layout/header/NavigationBar';
+import {Routes, Route} from 'react-router-dom'
+import {Home, Prices,  Contacts, Tours,  About} from './pages/index';
+import Login from './pages/Login';
 
 function App() {
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NavigationBar/>
+      <Routes>
+        <Route path="/home" element={<Home/>}/>
+        <Route path="/prices" element={<Prices/>}/>
+        <Route path="/contacts" element={<Contacts/>}/>
+        <Route path="/tours" element={<Tours/>}/>
+        <Route path="/about" element={<About/>}/>
+        <Route path="/login" element={<Login/>}/>
+      </Routes>
+    </>
+    
   );
 }
 

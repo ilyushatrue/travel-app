@@ -1,0 +1,99 @@
+.navbar_container{
+    position: sticky;
+    min-height: 5rem;
+    display: block;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(189, 160, 81);
+    padding-top: 0.6rem;
+    .menu{
+        display:none;
+        position: absolute;
+        top: 1.5rem;
+        left: 1.5rem;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 2.25rem;
+        height: 2rem;
+        color: #fff;
+    }
+    nav{
+        margin: 0 4rem 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .title{
+            font-size: 1.5rem;
+            margin: 0rem;
+            font-weight: bold;
+            text-decoration:none;
+            color: wheat;
+            a{
+                margin: 0px;
+                padding: 0px;
+            }
+            img{
+                height: 30px;
+            }
+        }
+
+        ul{
+            display: flex;
+            li{
+                list-style: none;
+                
+                a{
+                    display: block;
+                    text-decoration: none;
+                    color:white;
+                    padding: 0 0.5rem ;
+                    margin: 0 2vw;
+                    border-radius: 0.5rem;  
+                    transition:200ms;                
+                }
+                a:hover{
+                    background-color: rgb(99, 93, 14);                
+                }
+                a:not(.active):hover{
+                    background-color:rgb(143, 135, 23);                   
+                }
+                .active{
+                    background-color:  rgb(99, 93, 14);                     
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 768px){
+    .navbar_container{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .menu{
+            display: block;
+        }
+        nav{
+            display: flex;
+            flex-direction: column;
+            ul{
+                display: none;
+                flex-direction: column;
+                width:100%;
+                margin-bottom: 1rem;
+                li{
+                    width:100%;
+                    text-align: center;
+                    a{
+                        margin: 0.2rem 0.5rem;
+                    }
+                }
+            }
+            .open{
+                padding: 0;
+                display: block;
+            }
+        }
+    }
+}

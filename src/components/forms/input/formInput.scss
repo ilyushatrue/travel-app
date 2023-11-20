@@ -1,0 +1,22 @@
+.form_input_container{
+    display: block;
+    max-width: 400px;
+    max-height: 800px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    .form_input{
+        
+        display: flex;
+        justify-content: right;
+        align-items: center;
+        gap: 1.2rem;
+        background-color: coral;
+        input{
+            border: 1px solid black;
+            padding:15px;
+            margin: 10px 0px;
+        }
+    }
+
+}

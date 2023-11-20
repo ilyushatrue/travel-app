@@ -1,0 +1,16 @@
+:root{
+    --textColor: #333;
+    --accent: rgb(255, 251, 0);
+}
+
+
+body{
+    font-family: 'Roboto', sans-serif;
+    color: var(--textColor)
+}
+
+.container{
+    max-width: 1780px;
+    margin: 0 auto;
+    padding: 0 30px;
+}

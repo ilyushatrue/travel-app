@@ -1,0 +1,5 @@
+export * from "./Home"
+export * from "./About"
+export * from "./Contacts"
+export * from "./Prices"
+export * from "./Tours"
