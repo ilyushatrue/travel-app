@@ -18,10 +18,11 @@ function NavigationBar() {
     setMenuOpen(!menuOpen);
   };
   return (
+    <div className="cont">
     <div className="navbar_container">
       <nav>
         <NavLink to="/home" className={"title"}>
-          <img src={logo} alt="LOGO"/>
+          <div className="logo"></div>
         </NavLink>
         <ul className={menuOpen ? "open" : ""}>
           {menuItems.map((x) => (
@@ -32,6 +33,8 @@ function NavigationBar() {
         </ul>
       </nav>
       <Menu className="menu" onClick={onClick} />
+    </div>
+
     </div>
   );
 }
