@@ -1,0 +1,26 @@
+@import "../../styles/colors.scss";
+
+.tours_container{
+    font-family: 'Oswald';
+    display: block;
+    .front_image{
+        height: 800px;
+        background-image: url('../../images/bgtest.png');
+        background-size: cover;
+        background-position: center;
+    }
+    h1{
+        
+        font-size: 60px;
+    }
+
+    .n{
+        height:1000px; background-color:$primary-light-color;
+    }
+    .nn{
+        height:1000px; background-color:$bg-color;
+    }
+    .nnn{
+        height:300px; background-color:$primary-dark-color;
+    }
+}
