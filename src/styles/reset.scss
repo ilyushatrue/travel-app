@@ -3,6 +3,7 @@
 	padding: 0px;
 	margin: 0px;
 	border: none;
+	scroll-behavior: smooth;
 }
 
 *,
@@ -23,7 +24,7 @@ a:hover  {
 
 /* Common */
 
-aside, nav, footer, header, section, main {
+aside, nav, footer, header, main {
 	display: block;
 }
 

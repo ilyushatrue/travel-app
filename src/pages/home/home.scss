@@ -1,0 +1,28 @@
+.tours_container {
+  font-family: "Oswald";
+  display: flex;
+  flex-direction: column;
+  .front_image {
+    height: 800px;
+    width: 100%;
+    background-image: url("../../assets/images/bgtest.png");
+    background-size: cover;
+    background-position: center;
+  }
+}
+
+section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bgColor);
+
+  &:nth-child(even) {
+    background: var(--primaryColor);
+  }
+}
+
+.active{
+  background: #000;
+}

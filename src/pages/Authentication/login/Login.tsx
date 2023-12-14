@@ -61,7 +61,7 @@ export function Login() {
             </button>
 
             <span className='forgotPassword'>
-              Забыли пароль? <a href="">Изменить пароль</a>
+              Забыли пароль? <a href="/account">Изменить пароль</a>
             </span>
           </form>
         </div>
