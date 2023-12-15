@@ -1,17 +1,9 @@
 import "./navigationBar.scss";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Menu, Close } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 import { IMenuItem } from "./IMenuItem";
-
-const menuItems: IMenuItem[] = [
-  { href: "overview", title: "Маршруты" },
-  { href: "upcomingTours", title: "Экскурсии" },
-  { href: "feedbacks", title: "Отзывы" },
-  { href: "whyChooseUs", title: "О нас" },
-  { href: "contacts", title: "Контакты" },
-];
 
 const navMenuItems = [
   { address: "/login", title: "Войти" },
@@ -20,22 +12,59 @@ const navMenuItems = [
 ];
 
 interface IProps {
-  setActiveTitle: Function;
+  setActiveMenuItem: Function;
+  activeMenuItem: any;
+  setEnableScroll: (enabled: boolean)=>void;
 }
-function NavigationBar({ setActiveTitle }: IProps) {
+function NavigationBar({ setActiveMenuItem, activeMenuItem, setEnableScroll}: IProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [shouldScroll, setShouldScroll] = useState(false)
+  const overview = useRef<any>(null);
+  const upcomingTours = useRef<any>(null);
+  const feedbacks = useRef<any>(null);
+  const whyChooseUs = useRef<any>(null);
+  const contacts = useRef<any>(null);
+
+  const menuItems: IMenuItem[] = [
+    { ref: overview, href: "overview", title: "Маршруты", className: "" },
+    {
+      ref: upcomingTours,
+      href: "upcomingTours",
+      title: "Экскурсии",
+      className: "",
+    },
+    { ref: feedbacks, href: "feedbacks", title: "Отзывы", className: "" },
+    { ref: whyChooseUs, href: "whyChooseUs", title: "О нас", className: "" },
+    { ref: contacts, href: "contacts", title: "Контакты", className: "" },
+  ];
 
   const onMenuClick = () => {
+    
     document.getElementsByTagName("body")[0].style.overflow = menuOpen
       ? ""
       : "hidden";
-
-    onClick();
   };
 
-  const onClick = () => {
+  useEffect(()=>{
+    setEnableScroll(true)
+  }, [shouldScroll,setEnableScroll])
+
+  const onClick = (href:any) => {
+    setActiveMenuItem(href)
+    setShouldScroll(true);
     setMenuOpen(!menuOpen);
   };
+
+  useEffect(() => {
+    
+    menuItems.forEach((item) => {
+      if (item.href === activeMenuItem) {
+        item.ref.current.className = "menuItem active";
+      } else {
+        item.ref.current.className = "menuItem";
+      }
+    });
+  }, [activeMenuItem]);
 
   return (
     <div className={menuOpen ? "open" : ""}>
@@ -48,10 +77,11 @@ function NavigationBar({ setActiveTitle }: IProps) {
             {menuItems.map((item, index) => (
               <li key={index}>
                 <NavLink
+                  ref={item.ref}
                   to={"/" + item.href}
                   key={index}
-                  onClick={() => setActiveTitle(item.href)}
-                  className={"menuItem"}
+                  onClick={() => onClick(item.href)}
+                  className={"menuItem "}
                 >
                   {item.title}
                 </NavLink>

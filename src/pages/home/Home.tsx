@@ -1,14 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./home.scss";
-import NavigationBar from "../../components/layout/header/NavigationBar";
-import { IMenuItem } from "../../components/layout/header/IMenuItem";
-import { ClassNames } from "@emotion/react";
 
 interface IProps {
   activeSection: any;
+  setActiveSection: Function;
+  setShouldScroll: Function;
+  shouldScroll: boolean;
 }
-export function Home({ activeSection }: IProps) {
-  const [currentSection, setCurrentSection] = useState<any>(null);
+export function Home({
+  activeSection,
+  setActiveSection,
+  setShouldScroll,
+  shouldScroll,
+}: IProps) {
+  const [isMenuInitiated, setIsMenuInitiated] = useState(false);
   const overview = useRef<any>(null);
   const upcomingTours = useRef<any>(null);
   const feedbacks = useRef<any>(null);
@@ -27,10 +32,25 @@ export function Home({ activeSection }: IProps) {
     { section: contacts, header: "Контакты", id: "contacts" },
   ];
 
+  window.onscroll = () => {
+    setTimeout(()=>{
+      sections.forEach((section) => {
+        const top = window.scrollY;
+        const offset = section.section.current.offsetTop - 150;
+        const height = section.section.current.offsetHeight;
+        if (top >= offset && top < offset + height) {
+          if (shouldScroll) setActiveSection(section.id);
+          if (section.id !== activeSection) {
+            setShouldScroll(false);
+          }
+        }
+      });
+    }, 200)
+  };
+
   const scrollToSection = (elementRef: any) => {
+    if (!shouldScroll) return;
     const currSection = sections.find((x) => x.id === elementRef)?.section;
-    console.log(currSection);
-    console.log(elementRef);
     if (!currSection) return;
     window.scrollTo({
       top: currSection.current.offsetTop,
@@ -39,20 +59,16 @@ export function Home({ activeSection }: IProps) {
   };
 
   useEffect(() => {
-    setCurrentSection(activeSection);
-    scrollToSection(activeSection)
+    if (shouldScroll) {
+      scrollToSection(activeSection);
+    }
   }, [activeSection]);
 
   return (
     <div className="tours_container">
       {sections.map((section, index) => (
         <>
-          <section
-            key={index + 1}
-            id={section.id}
-            ref={section.section}
-            onClick={() => scrollToSection(currentSection)}
-          >
+          <section key={index + 1} id={section.id} ref={section.section}>
             {section.header}
           </section>
         </>
