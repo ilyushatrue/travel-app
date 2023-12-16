@@ -3,4 +3,5 @@ export interface IMenuItem {
   href: string;
   title: string;
   className:string;
+  active: boolean;
 }

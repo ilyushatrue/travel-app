@@ -1,69 +1,99 @@
 import "./navigationBar.scss";
 import { useState, useRef, useEffect } from "react";
 import { Menu, Close } from "@mui/icons-material";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import logo from "../../../assets/images/logo.png";
 import { IMenuItem } from "./IMenuItem";
 
 const navMenuItems = [
-  { address: "/login", title: "Войти" },
-  { address: "/register", title: "Регистрация" },
-  { address: "/account", title: "Личный кабинет" },
+  { address: "/login", title: "Войти", className: "menuItem login" },
+  {
+    address: "/register",
+    title: "Регистрация",
+    className: "menuItem registration",
+  },
+  { address: "/account", title: "Личный кабинет", className: "menuItem" },
 ];
-
+const menuItems = (refs: any[]): IMenuItem[] => [
+  {
+    ref: refs[0],
+    href: "overview",
+    title: "Маршруты",
+    className: "menuItem",
+    active: false,
+  },
+  {
+    ref: refs[1],
+    href: "upcomingTours",
+    title: "Экскурсии",
+    className: "menuItem",
+    active: false,
+  },
+  {
+    ref: refs[2],
+    href: "feedbacks",
+    title: "Отзывы",
+    className: "menuItem",
+    active: false,
+  },
+  {
+    ref: refs[3],
+    href: "whyChooseUs",
+    title: "О нас",
+    className: "menuItem",
+    active: false,
+  },
+  {
+    ref: refs[4],
+    href: "contacts",
+    title: "Контакты",
+    className: "menuItem",
+    active: false,
+  },
+];
 interface IProps {
   setActiveMenuItem: Function;
   activeMenuItem: any;
-  setEnableScroll: (enabled: boolean)=>void;
+  setEnableScroll: (enabled: boolean) => void;
 }
-function NavigationBar({ setActiveMenuItem, activeMenuItem, setEnableScroll}: IProps) {
+function NavigationBar({
+  setActiveMenuItem,
+  activeMenuItem,
+  setEnableScroll,
+}: IProps) {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [shouldScroll, setShouldScroll] = useState(false)
   const overview = useRef<any>(null);
   const upcomingTours = useRef<any>(null);
   const feedbacks = useRef<any>(null);
   const whyChooseUs = useRef<any>(null);
   const contacts = useRef<any>(null);
-
-  const menuItems: IMenuItem[] = [
-    { ref: overview, href: "overview", title: "Маршруты", className: "" },
-    {
-      ref: upcomingTours,
-      href: "upcomingTours",
-      title: "Экскурсии",
-      className: "",
-    },
-    { ref: feedbacks, href: "feedbacks", title: "Отзывы", className: "" },
-    { ref: whyChooseUs, href: "whyChooseUs", title: "О нас", className: "" },
-    { ref: contacts, href: "contacts", title: "Контакты", className: "" },
-  ];
+  const refs = [overview, upcomingTours, feedbacks, whyChooseUs, contacts];
+  const [menu, setMenu] = useState(menuItems(refs));
 
   const onMenuClick = () => {
-    
     document.getElementsByTagName("body")[0].style.overflow = menuOpen
       ? ""
       : "hidden";
   };
 
-  useEffect(()=>{
-    setEnableScroll(true)
-  }, [shouldScroll,setEnableScroll])
 
-  const onClick = (href:any) => {
-    setActiveMenuItem(href)
-    setShouldScroll(true);
+  const onClick = (href: any) => {
+    setActiveMenuItem(href);
+    setEnableScroll(true);
     setMenuOpen(!menuOpen);
   };
 
   useEffect(() => {
-    
-    menuItems.forEach((item) => {
-      if (item.href === activeMenuItem) {
-        item.ref.current.className = "menuItem active";
-      } else {
-        item.ref.current.className = "menuItem";
-      }
-    });
+    setMenu((prev) =>
+      [...prev].map((item) => {
+        if (item.href === activeMenuItem) {
+          item.active = true;
+        } else {
+          item.active = false;
+        }
+        return item;
+      })
+    );
   }, [activeMenuItem]);
 
   return (
@@ -73,33 +103,43 @@ function NavigationBar({ setActiveMenuItem, activeMenuItem, setEnableScroll}: IP
           <NavLink to="/home" className={"title"}>
             <div className="logo"></div>
           </NavLink>
-          <ul className={menuOpen ? "open" : ""}>
-            {menuItems.map((item, index) => (
-              <li key={index}>
-                <NavLink
-                  ref={item.ref}
-                  to={"/" + item.href}
-                  key={index}
-                  onClick={() => onClick(item.href)}
-                  className={"menuItem "}
-                >
-                  {item.title}
-                </NavLink>
-              </li>
-            ))}
-            {navMenuItems.map((x, index) => (
-              <li key={index}>
-                <NavLink
-                  key={index}
-                  onClick={onClick}
-                  to={x.address}
-                  className={"menuItem"}
-                >
-                  {x.title}
-                </NavLink>
-              </li>
-            ))}
-          </ul>
+          <nav>
+            <ul className={menuOpen ? "open" : ""}>
+              {menu.map((item, index) => (
+                <li key={index}>
+                  <Link
+                    ref={item.ref}
+                    to={"/" + item.href}
+                    key={index}
+                    onClick={() => onClick(item.href)}
+                    className={
+                      item.className +
+                      " " +
+                      (item.active === true ? "active" : "")
+                    }
+                  >
+                    {item.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <nav>
+            <ul className="authorization">
+              {navMenuItems.map((item, index) => (
+                <li key={index}>
+                  <NavLink
+                    key={index}
+                    onClick={onClick}
+                    to={item.address}
+                    className={item.className}
+                  >
+                    {item.title}
+                  </NavLink>
+                </li>
+              ))}
+            </ul>
+          </nav>
         </nav>
         <Menu className="menu" onClick={onMenuClick} />
       </div>

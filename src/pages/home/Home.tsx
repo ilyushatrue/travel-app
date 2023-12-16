@@ -13,7 +13,6 @@ export function Home({
   setShouldScroll,
   shouldScroll,
 }: IProps) {
-  const [isMenuInitiated, setIsMenuInitiated] = useState(false);
   const overview = useRef<any>(null);
   const upcomingTours = useRef<any>(null);
   const feedbacks = useRef<any>(null);
@@ -33,19 +32,26 @@ export function Home({
   ];
 
   window.onscroll = () => {
-    setTimeout(()=>{
-      sections.forEach((section) => {
-        const top = window.scrollY;
-        const offset = section.section.current.offsetTop - 150;
-        const height = section.section.current.offsetHeight;
-        if (top >= offset && top < offset + height) {
-          if (shouldScroll) setActiveSection(section.id);
-          if (section.id !== activeSection) {
+    sections.forEach((section) => {
+      const top = window.scrollY;
+      const sectionOffsetTop = section.section.current.offsetTop - 200;
+      const height = section.section.current.offsetHeight;
+      const offsetBottom = sectionOffsetTop;
+      console.log(shouldScroll)
+      if (shouldScroll) {
+        if (section.id === activeSection) {
+          if (top >= sectionOffsetTop && top < sectionOffsetTop + height) {
+            setActiveSection(section.id);
             setShouldScroll(false);
           }
         }
-      });
-    }, 200)
+      } else {
+        if (top >= sectionOffsetTop && top < sectionOffsetTop + height) {
+         
+          setActiveSection(section.id);
+        }
+      }
+    });
   };
 
   const scrollToSection = (elementRef: any) => {
