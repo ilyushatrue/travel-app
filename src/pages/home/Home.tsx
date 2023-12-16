@@ -3,14 +3,14 @@ import "./home.scss";
 
 interface IProps {
   activeSection: any;
-  setActiveSection: Function;
-  setShouldScroll: Function;
+  assignActiveSection: Function;
+  assignShouldScroll: Function;
   shouldScroll: boolean;
 }
 export function Home({
   activeSection,
-  setActiveSection,
-  setShouldScroll,
+  assignActiveSection,
+  assignShouldScroll,
   shouldScroll,
 }: IProps) {
   const overview = useRef<any>(null);
@@ -32,32 +32,30 @@ export function Home({
   ];
 
   window.onscroll = () => {
-    sections.forEach((section) => {
+    const activateSection = (section: any, disableScroll: boolean = false) => {
       const top = window.scrollY;
-      const sectionOffsetTop = section.section.current.offsetTop - 200;
-      const height = section.section.current.offsetHeight;
-      const offsetBottom = sectionOffsetTop;
-      console.log(shouldScroll)
+      const offsetTop = section.section.current.offsetTop - 200;
+      const offsetHeight = section.section.current.offsetHeight;
+      if (top >= offsetTop && top < offsetTop + offsetHeight) {
+        assignActiveSection(section.id);
+        if (disableScroll) {
+          assignShouldScroll(false);
+        }
+      }
+    };
+    sections.forEach((section) => {
       if (shouldScroll) {
         if (section.id === activeSection) {
-          if (top >= sectionOffsetTop && top < sectionOffsetTop + height) {
-            setActiveSection(section.id);
-            setShouldScroll(false);
-          }
+          activateSection(section, true);
         }
       } else {
-        if (top >= sectionOffsetTop && top < sectionOffsetTop + height) {
-         
-          setActiveSection(section.id);
-        }
+        activateSection(section);
       }
     });
   };
 
   const scrollToSection = (elementRef: any) => {
-    if (!shouldScroll) return;
-    const currSection = sections.find((x) => x.id === elementRef)?.section;
-    if (!currSection) return;
+    const currSection = sections.find((x) => x.id === elementRef)!.section;
     window.scrollTo({
       top: currSection.current.offsetTop,
       behavior: "smooth",

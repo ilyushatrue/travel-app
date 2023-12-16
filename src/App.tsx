@@ -7,27 +7,45 @@ import { useEffect, useRef, useState } from "react";
 
 function App() {
   const [enableScroll, setEnableScroll] = useState(false);
-  const [currentSection, setCurrentSection] = useState(null);
+  const [activeSection, setCurrentSection] = useState(null);
 
-
-  const setShouldScroll = (shouldScroll: boolean) => {
-    console.log(shouldScroll)
+  const assignShouldScroll = (shouldScroll: boolean) => {
     setEnableScroll(shouldScroll);
   };
-  const activateSection = (activeSection: any) => {
+  const assignActiveSection = (activeSection: any) => {
     setCurrentSection(activeSection);
   };
   return (
     <>
-      <NavigationBar activeMenuItem={currentSection} setActiveMenuItem={activateSection} setEnableScroll={setShouldScroll}/>
+      <NavigationBar
+        activeMenuItem={activeSection}
+        assignActiveMenuItem={assignActiveSection}
+        assignEnableScroll={assignShouldScroll}
+      />
       <Routes>
         <Route
           path="*"
-          element={<Home activeSection={currentSection} key={1} setActiveSection={activateSection}  setShouldScroll={setShouldScroll} shouldScroll={enableScroll}/>}
+          element={
+            <Home
+              activeSection={activeSection}
+              key={1}
+              assignActiveSection={assignActiveSection}
+              assignShouldScroll={assignShouldScroll}
+              shouldScroll={enableScroll}
+            />
+          }
         />
         <Route
           path="/"
-          element={<Home activeSection={currentSection} key={2} setActiveSection={activateSection} setShouldScroll={setShouldScroll} shouldScroll={enableScroll}/>}
+          element={
+            <Home
+              activeSection={activeSection}
+              key={2}
+              assignActiveSection={assignActiveSection}
+              assignShouldScroll={assignShouldScroll}
+              shouldScroll={enableScroll}
+            />
+          }
         />
         <Route path="/account" element={<Account />} key={3} />
         <Route path="/login" element={<Login />} key={4} />

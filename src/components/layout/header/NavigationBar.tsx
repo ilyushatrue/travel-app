@@ -52,14 +52,14 @@ const menuItems = (refs: any[]): IMenuItem[] => [
   },
 ];
 interface IProps {
-  setActiveMenuItem: Function;
+  assignActiveMenuItem: Function;
   activeMenuItem: any;
-  setEnableScroll: (enabled: boolean) => void;
+  assignEnableScroll: Function;
 }
 function NavigationBar({
-  setActiveMenuItem,
+  assignActiveMenuItem,
   activeMenuItem,
-  setEnableScroll,
+  assignEnableScroll,
 }: IProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const overview = useRef<any>(null);
@@ -67,8 +67,9 @@ function NavigationBar({
   const feedbacks = useRef<any>(null);
   const whyChooseUs = useRef<any>(null);
   const contacts = useRef<any>(null);
-  const refs = [overview, upcomingTours, feedbacks, whyChooseUs, contacts];
-  const [menu, setMenu] = useState(menuItems(refs));
+  const [menu, setMenu] = useState(
+    menuItems([overview, upcomingTours, feedbacks, whyChooseUs, contacts])
+  );
 
   const onMenuClick = () => {
     document.getElementsByTagName("body")[0].style.overflow = menuOpen
@@ -76,10 +77,9 @@ function NavigationBar({
       : "hidden";
   };
 
-
   const onClick = (href: any) => {
-    setActiveMenuItem(href);
-    setEnableScroll(true);
+    assignActiveMenuItem(href);
+    assignEnableScroll(true);
     setMenuOpen(!menuOpen);
   };
 
