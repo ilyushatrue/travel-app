@@ -33,9 +33,11 @@ export function Home({
 
   window.onscroll = () => {
     const activateSection = (section: any, disableScroll: boolean = false) => {
+      console.log(section)
+      if(!section) return;
       const top = window.scrollY;
-      const offsetTop = section.section.current.offsetTop - 200;
-      const offsetHeight = section.section.current.offsetHeight;
+      const offsetTop = section?.section?.current?.offsetTop?? 0 - 200 ;
+      const offsetHeight = section?.section?.current?.offsetHeight ?? 0;
       if (top >= offsetTop && top < offsetTop + offsetHeight) {
         assignActiveSection(section.id);
         if (disableScroll) {

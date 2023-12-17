@@ -2,7 +2,7 @@ import "./navigationBar.scss";
 import { useState, useRef, useEffect } from "react";
 import { Menu, Close } from "@mui/icons-material";
 import { NavLink, Link } from "react-router-dom";
-import logo from "../../../assets/images/logo.png";
+import logo1 from "../../../assets/images/logo.png";
 import { INavMenu, INavMenuItem } from "./IMenuItem";
 
 const navMenuItems = (refs: any[][]): INavMenu => ({
@@ -14,7 +14,7 @@ const navMenuItems = (refs: any[][]): INavMenu => ({
                     href: "overview",
                     className: "logo",
                     active: false,
-                    child: <div></div>,
+                    child: <img src={logo1} alt=""/>,
                 },
             ],
         },
@@ -26,7 +26,6 @@ const navMenuItems = (refs: any[][]): INavMenu => ({
                     child: "Маршруты",
                     className: "menuItem",
                     active: true,
-                    isRedirected: false
                 },
                 {
                     ref: refs[0][1],
@@ -34,7 +33,6 @@ const navMenuItems = (refs: any[][]): INavMenu => ({
                     child: "Экскурсии",
                     className: "menuItem",
                     active: false,
-                    isRedirected: false
                 },
                 {
                     ref: refs[0][2],
@@ -42,7 +40,6 @@ const navMenuItems = (refs: any[][]): INavMenu => ({
                     child: "Отзывы",
                     className: "menuItem",
                     active: false,
-                    isRedirected: false
                 },
                 {
                     ref: refs[0][3],
@@ -50,7 +47,6 @@ const navMenuItems = (refs: any[][]): INavMenu => ({
                     child: "О нас",
                     className: "menuItem",
                     active: false,
-                    isRedirected: false
                 },
                 {
                     ref: refs[0][4],
@@ -58,7 +54,6 @@ const navMenuItems = (refs: any[][]): INavMenu => ({
                     child: "Контакты",
                     className: "menuItem",
                     active: false,
-                    isRedirected: false
                 },
             ],
         },
@@ -126,12 +121,10 @@ function NavigationBar({
             : "hidden";
     }, [menuOpen]);
 
-    const onClick = (href: any, enableScroll: boolean = true) => {
+    const onClick = (href: any) => {
         assignActiveMenuItem(href);
-        assignEnableScroll(enableScroll);
-        if (menuOpen) {
-            setMenuOpen(false);
-        }
+        assignEnableScroll(true);
+        if (menuOpen) setMenuOpen(false);
     };
 
     useEffect(() => {
@@ -150,14 +143,15 @@ function NavigationBar({
     }, [activeMenuItem]);
 
     return (
-        <div className={"navbar_container" + " " + (menuOpen ? "open" : "")}>
+        <div className={["navbar_container", menuOpen ? "open" : ""].join(" ")}>
             <nav>
                 {navMenu.groups.map((group, groupIndex) => (
                     <ul
                         key={groupIndex}
-                        className={
-                            group.className + " " + (menuOpen ? "open" : "")
-                        }
+                        className={[
+                            group.className ?? "",
+                            menuOpen ? "open" : "",
+                        ].filter(x=>x).join(" ")}
                     >
                         {group.items.map((item, itemIndex) => (
                             <li key={itemIndex * (groupIndex + 1)}>
@@ -165,12 +159,11 @@ function NavigationBar({
                                     ref={item.ref}
                                     to={"/" + item.href}
                                     key={itemIndex * (groupIndex + 1)}
-                                    onClick={() => onClick(item.href, item.isRedirected)}
-                                    className={
-                                        item.className +
-                                        " " +
-                                        (item.active === true ? "active" : "")
-                                    }
+                                    onClick={() => onClick(item.href)}
+                                    className={[
+                                        item.className,
+                                        item.active === true ? "active" : "",
+                                    ].filter(x=>x).join(" ")}
                                 >
                                     {item.child}
                                 </Link>

@@ -15,5 +15,4 @@ export interface INavMenuItem {
   className: string;
   active: boolean;
   child?: any
-  isRedirected?: boolean
 }
