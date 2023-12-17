@@ -1,19 +1,17 @@
-import { Box, Typography } from "@mui/material";
 import NavigationBar from "./components/layout/header/NavigationBar";
 import { Routes, Route } from "react-router-dom";
 import { Home, Account, Login, Registration } from "./pages/index";
-import { IMenuItem } from "./components/layout/header/IMenuItem";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 function App() {
   const [enableScroll, setEnableScroll] = useState(false);
-  const [activeSection, setCurrentSection] = useState(null);
+  const [activeSection, setActiveSection] = useState(null);
 
   const assignShouldScroll = (shouldScroll: boolean) => {
     setEnableScroll(shouldScroll);
   };
   const assignActiveSection = (activeSection: any) => {
-    setCurrentSection(activeSection);
+    setActiveSection(activeSection);
   };
   return (
     <>
