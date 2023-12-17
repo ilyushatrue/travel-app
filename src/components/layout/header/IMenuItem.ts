@@ -2,6 +2,6 @@ export interface IMenuItem {
   ref: any;
   href: string;
   title: string;
-  className:string;
+  className: string;
   active: boolean;
 }

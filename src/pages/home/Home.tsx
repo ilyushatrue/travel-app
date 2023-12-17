@@ -69,14 +69,15 @@ export function Home({
   }, [activeSection]);
 
   return (
-    <div className="tours_container">
-      {sections.map((section, index) => (
-        <>
+    <>
+      <div className="tours_container">
+        {sections.map((section, index) => (
           <section key={index + 1} id={section.id} ref={section.section}>
             {section.header}
           </section>
-        </>
-      ))}
-    </div>
+        ))}
+      </div>
+      <footer></footer>
+    </>
   );
 }

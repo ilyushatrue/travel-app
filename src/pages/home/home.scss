@@ -23,6 +23,11 @@ section {
   }
 }
 
-.active{
+.active {
   background: #000;
+}
+
+footer {
+  height: 300px;
+  background-color: var(--secondaryColor);
 }

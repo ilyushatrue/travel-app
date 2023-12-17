@@ -6,12 +6,12 @@ import logo from "../../../assets/images/logo.png";
 import { IMenuItem } from "./IMenuItem";
 
 const navMenuItems = [
-  { address: "/login", title: "Войти", className: "menuItem login" },
   {
     address: "/register",
     title: "Регистрация",
     className: "menuItem registration",
   },
+  { address: "/login", title: "Войти", className: "menuItem login" },
   { address: "/account", title: "Личный кабинет", className: "menuItem" },
 ];
 const menuItems = (refs: any[]): IMenuItem[] => [
@@ -71,16 +71,22 @@ function NavigationBar({
     menuItems([overview, upcomingTours, feedbacks, whyChooseUs, contacts])
   );
 
-  const onMenuClick = () => {
-    document.getElementsByTagName("body")[0].style.overflow = menuOpen
+  const toggleOpenMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  useEffect(() => {
+    document.getElementsByTagName("body")[0].style.overflow = !menuOpen
       ? ""
       : "hidden";
-  };
+  }, [menuOpen]);
 
   const onClick = (href: any) => {
     assignActiveMenuItem(href);
     assignEnableScroll(true);
-    setMenuOpen(!menuOpen);
+    if (menuOpen) {
+      setMenuOpen(false);
+    }
   };
 
   useEffect(() => {
@@ -100,9 +106,13 @@ function NavigationBar({
     <div className={menuOpen ? "open" : ""}>
       <div className="navbar_container">
         <nav>
-          <NavLink to="/home" className={"title"}>
-            <div className="logo"></div>
-          </NavLink>
+          <Link
+            to={"/" + menu[0].href}
+            className={"logo"}
+            onClick={() => onClick(menu[0].href)}
+          >
+            <div></div>
+          </Link>
           <nav>
             <ul className={menuOpen ? "open" : ""}>
               {menu.map((item, index) => (
@@ -141,7 +151,7 @@ function NavigationBar({
             </ul>
           </nav>
         </nav>
-        <Menu className="menu" onClick={onMenuClick} />
+        <Menu className="menu" onClick={toggleOpenMenu} />
       </div>
     </div>
   );
