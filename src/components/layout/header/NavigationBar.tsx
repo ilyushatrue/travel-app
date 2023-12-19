@@ -2,7 +2,7 @@ import "./navigationBar.scss";
 import { useState } from "react";
 import { Menu, Close } from "@mui/icons-material";
 import { NavLink } from "react-router-dom";
-import logo from '../../../images/logo.png'
+import logo from '../../../assets/images/logo.png'
 
 const menuItems = [
   { address: "/tours", name: "Маршруты" },
@@ -10,6 +10,7 @@ const menuItems = [
   { address: "/prices", name: "Цены" },
   { address: "/contacts", name: "Контакты" },
   { address: "/login", name: "Войти" },
+  { address: "/register", name: "Регистрация" },
 ];
 function NavigationBar() {
   const [menuOpen, setMenuOpen] = useState(false);

@@ -1,4 +1,4 @@
-@import '../../../styles/colors.scss';
+@import '../../../styles/common.scss';
 
 .navbar_container{
     position: fixed;
@@ -6,7 +6,7 @@
     width: 100vw;
     display: flex;
     flex-direction: column;
-    background-color: $bg-color;
+    background-color: var(--paleOrangeColor);
     font-size: 14px;
     
     .menu{
@@ -40,7 +40,7 @@
             .logo {
                 height: 60px;
                 width: 60px;
-                background-image: url("../../../images/logo.png");
+                background-image: url("../../../assets/images/logo.png");
                 background-size: cover;
               }
         }
@@ -60,13 +60,13 @@
                     transition:200ms;                
                 }
                 a:hover{
-                    background-color: $secondary-dark-color;    
+                    background-color: var(--primaryColor);    
                 }
                 a:not(.active):hover{
-                    background-color: $secondary-accent-color;
+                    background-color: var(--hoverColor);
                 }
                 .active{
-                    background-color:  $secondary-dark-color;  
+                    background-color:  var(--primaryColor);  
                                         
                 }
             }
