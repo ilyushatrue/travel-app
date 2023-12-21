@@ -12,7 +12,7 @@ export function Login() {
     <div className="loginPage flex">
       <div className="container flex">
         <div className="videoDiv">
-          <video src={video} autoPlay muted loop></video>
+          {/* <video src={video} autoPlay muted loop></video> */}
           <div className="textDiv">
             <h2 className="title">
               ПРИМОРЬЕ

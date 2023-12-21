@@ -2,19 +2,19 @@ import "./navigationBar.scss";
 import { useState, useRef, useEffect } from "react";
 import { Menu, Close } from "@mui/icons-material";
 import { NavLink, Link } from "react-router-dom";
-import logo1 from "../../../assets/images/logo.png";
+import logo from "../../../assets/images/logo.png";
 import { INavMenu, INavMenuItem } from "./IMenuItem";
 
 const navMenuItems = (refs: any[][]): INavMenu => ({
     groups: [
-        {
+        { 
             items: [
                 {
                     ref: refs[0][0],
                     href: "overview",
                     className: "logo",
                     active: false,
-                    child: <img src={logo1} alt=""/>,
+                    child: <img src={logo} alt="" />,
                 },
             ],
         },
@@ -60,6 +60,7 @@ const navMenuItems = (refs: any[][]): INavMenu => ({
         {
             items: [
                 {
+                    liClass: "registration-box",
                     ref: refs[0][0],
                     href: "register",
                     child: "Регистрация",
@@ -151,10 +152,10 @@ function NavigationBar({
                         className={[
                             group.className ?? "",
                             menuOpen ? "open" : "",
-                        ].filter(x=>x).join(" ")}
+                        ].filter(x => x).join(" ")}
                     >
                         {group.items.map((item, itemIndex) => (
-                            <li key={itemIndex * (groupIndex + 1)}>
+                            <li key={itemIndex * (groupIndex + 1)} className={item.liClass}>
                                 <Link
                                     ref={item.ref}
                                     to={"/" + item.href}
@@ -163,7 +164,7 @@ function NavigationBar({
                                     className={[
                                         item.className,
                                         item.active === true ? "active" : "",
-                                    ].filter(x=>x).join(" ")}
+                                    ].filter(x => x).join(" ")}
                                 >
                                     {item.child}
                                 </Link>

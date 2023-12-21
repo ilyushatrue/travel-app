@@ -91,6 +91,16 @@
         }
     }
 }
+
+@media (max-width: 1024px) {
+    .logo{
+        display: none;
+    }
+    .registration-box{
+        display: none;
+    }
+}
+
 @media (max-width: 768px) {
     .navbar_container {
         flex-direction: column;
